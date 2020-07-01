@@ -2,20 +2,6 @@ This is a basic notes app. You can add, delete or update your notes. I have adde
 
 # See all your notes
 
-![](images/listNotes.jpg)
+<img src ="images/listNotes.jpg width = 100>
 
-
-# Add a note
-![](images/addNote.png)
-
-# update a note
-
-![](images/updateNote.jpg)
-
-# delete a note
-![](images/deleteNote.jpg)
-
-# delete all notes at once
-
-![](images/deleteAllNotes.png)
 

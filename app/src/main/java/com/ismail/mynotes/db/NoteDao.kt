@@ -8,16 +8,16 @@ import androidx.room.*
 interface NoteDao {
 
     @Insert
-    suspend fun insertNote(noteItem: NoteItem)
+    suspend fun insertNote(noteItem: NoteItem) : Long
 
     @Delete
-    suspend fun deleteNote(noteItem: NoteItem)
+    suspend fun deleteNote(noteItem: NoteItem) : Int
 
     @Update
-    suspend fun updateNote(noteItem: NoteItem)
+    suspend fun updateNote(noteItem: NoteItem) : Int
 
     @Query("DELETE FROM note_table")
-   suspend fun deleteAllNotes()
+   suspend fun deleteAllNotes() : Int
 
     @Query("SELECT * FROM note_table")
 

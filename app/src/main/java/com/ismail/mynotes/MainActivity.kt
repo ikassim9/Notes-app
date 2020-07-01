@@ -187,7 +187,6 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.delete_all_notes -> {
                 deleteAllNotes()
-                Log.i("delete_all_notes", "All notes have been deleted")
                 return true
 
             }

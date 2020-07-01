@@ -15,6 +15,11 @@ This is a basic notes app. You can add, delete or update your notes. I have adde
 <img src="images/updateNote.png" width="350">
 
 
+# Swipe to delete your notes
+
+<img src="images/swipeToDelete.png" width="350">
+
+
 # Delete your note
 <img src="images/deleteNote.png" width="350">
 

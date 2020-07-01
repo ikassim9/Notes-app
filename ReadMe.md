@@ -3,6 +3,6 @@ This is a basic notes app. You can add, delete or update your notes. I have adde
 # See your notes
 
 
-<img src="images/addNote.png">
+<img src="images/listNotes.jpg" width = "250">
 
 

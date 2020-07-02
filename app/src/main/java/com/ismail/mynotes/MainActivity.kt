@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         val repository = NoteRepositroy(dao)
         val factory = NoteViewModelFactory(repository)
         recyclerView.layoutManager = LinearLayoutManager(this)
+
         noteAdapter =
             RecyclerViewAdapter(
                 { noteItem: NoteItem, position: Int ->

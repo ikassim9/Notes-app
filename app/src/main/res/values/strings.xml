@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyNotes</string>
+    <string name="app_name">Simple Note</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_view">Title</string>
     <string name="body">body</string>

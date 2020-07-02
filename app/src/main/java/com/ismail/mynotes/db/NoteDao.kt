@@ -2,7 +2,11 @@ package com.ismail.mynotes.db
 
 import android.provider.ContactsContract.CommonDataKinds.Note
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
+import androidx.room.Dao
 
 @Dao
 interface NoteDao {
@@ -11,7 +15,7 @@ interface NoteDao {
     suspend fun insertNote(noteItem: NoteItem) : Long
 
     @Delete
-    suspend fun deleteNote(noteItem: NoteItem) : Int
+     suspend fun deleteNote(noteItem: NoteItem) : Int
 
     @Update
     suspend fun updateNote(noteItem: NoteItem) : Int

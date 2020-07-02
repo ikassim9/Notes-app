@@ -9,14 +9,14 @@ data class NoteItem(
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "note_id")
-    var id: Int,
+    val id: Int,
 
     @ColumnInfo(name = "note_title")
-    var title: String?,
+    val title: String?,
 
 
     @ColumnInfo(name = "note_description")
-    var description: String?
+    val description: String?
 ){
     override fun equals(other: Any?): Boolean {
         if(javaClass != other?.javaClass){

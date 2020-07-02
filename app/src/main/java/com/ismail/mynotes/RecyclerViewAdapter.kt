@@ -66,7 +66,7 @@ class RecyclerViewAdapter(
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldNoteList[oldItemPosition].equals(newNoteList[newItemPosition])
+        return oldNoteList[oldItemPosition] == (newNoteList[newItemPosition])
         }
 
     }

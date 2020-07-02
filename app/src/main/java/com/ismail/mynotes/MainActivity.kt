@@ -151,7 +151,7 @@ class MainActivity : AppCompatActivity() {
             val note = NoteItem(0, title, description)
             viewModel.insert(note)
             Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show()
-            Log.i("note_insert", "$note")
+
 
 
         } else if (requestCode == EDIT_NOTE_REQUEST && resultCode == Activity.RESULT_OK) {

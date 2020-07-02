@@ -17,23 +17,7 @@ data class NoteItem(
 
     @ColumnInfo(name = "note_description")
     val description: String?
-){
-    override fun equals(other: Any?): Boolean {
-        if(javaClass != other?.javaClass){
-            return false
-        }
-        other as NoteItem
-        if(id != other.id){
-            return false
-        }
-        if(title != other.title) {
-            return false
-        }
-        if(description != other.description) {
-            return false
-        }
+)
 
-        return true
-    }
-}
+
 

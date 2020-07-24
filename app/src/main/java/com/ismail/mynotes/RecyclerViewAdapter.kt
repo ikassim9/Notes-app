@@ -40,11 +40,11 @@ class RecyclerViewAdapter(
 
     fun setList(noteItem: List<NoteItem>) {
         val oldList = noteList
-        val diffResult : DiffUtil.DiffResult = DiffUtil.calculateDiff(
-            NoteItemDiffCall(oldList, noteItem )
+        val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(
+            NoteItemDiffCall(oldList, noteItem)
         )
         noteList = noteItem
-       diffResult.dispatchUpdatesTo(this)
+        diffResult.dispatchUpdatesTo(this)
 
     }
 
@@ -52,9 +52,12 @@ class RecyclerViewAdapter(
     fun removeItem(position: Int): NoteItem {
         return noteList[position]
     }
-    class NoteItemDiffCall(var oldNoteList : List<NoteItem>, var newNoteList : List<NoteItem>) : DiffUtil.Callback(){
+
+    class NoteItemDiffCall(var oldNoteList: List<NoteItem>, var newNoteList: List<NoteItem>) :
+        DiffUtil.Callback() {
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return (oldNoteList[oldItemPosition].id == newNoteList[newItemPosition].id)        }
+            return (oldNoteList[oldItemPosition].id == newNoteList[newItemPosition].id)
+        }
 
         override fun getOldListSize(): Int {
             return oldNoteList.size
@@ -66,7 +69,7 @@ class RecyclerViewAdapter(
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldNoteList[oldItemPosition] == (newNoteList[newItemPosition])
+            return oldNoteList[oldItemPosition] == (newNoteList[newItemPosition])
         }
 
     }

@@ -130,7 +130,7 @@ class MainActivity : AppCompatActivity() {
                 dialog.cancel()
             }.show()
     }
-    
+
     private fun setUpSwipeHandler() {
         val itemTouchHelperCallback = object :
             ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT) {

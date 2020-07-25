@@ -7,11 +7,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_above="@+id/buttonHolder"
         android:scrollbars="vertical"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
@@ -21,20 +19,7 @@
         android:layout_marginBottom="7dp"
         android:clipToPadding="false"
         android:padding="4dp"
-        tools:listitem="" />
-
-    <RelativeLayout
-        android:id="@+id/buttonHolder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:layout_marginStart="-2dp"
-        android:layout_marginBottom="3dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="-2dp">
-
+        tools:listitem="@layout/list_item" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabBtn"
@@ -42,16 +27,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="8dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="26dp"
+            android:layout_marginBottom="12dp"
             android:backgroundTint="@color/colorPrimary"
             android:clickable="true"
             android:focusable="true"
             android:padding="0dp"
-            app:srcCompat="@drawable/ic_add" />
+            app:srcCompat="@drawable/ic_add"
+            android:layout_marginRight="26dp" />
 
     </RelativeLayout>
 
-</RelativeLayout>
 

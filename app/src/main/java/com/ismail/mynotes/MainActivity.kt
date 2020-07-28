@@ -3,6 +3,7 @@ package com.ismail.mynotes
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.ismail.mynotes.NoteActivity.Companion.ADD_NOTE_REQUEST
 import com.ismail.mynotes.NoteActivity.Companion.DESCRIPTION_KEY
 import com.ismail.mynotes.NoteActivity.Companion.EDIT_NOTE_REQUEST
@@ -47,12 +49,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun noteItemLongClickListener(noteItem: NoteItem, position: Int): Boolean {
         val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setMessage("Do you want to permanently delete this note?")
+        dialogBuilder.setMessage("Do you want to delete this note?")
             .setTitle("Delete Note")
             .setCancelable(false)
             .setPositiveButton("Yes") { dialog, id ->
                 viewModel.delete(noteItem)
-                Toast.makeText(this, "Note deleted", Toast.LENGTH_SHORT).show()
+                undoNoteDeletionSnackbar(noteItem)
                 Log.i("note_delete", "$noteItem is deleted at position $position")
             }
             .setNegativeButton("Cancel") { dialog, id ->
@@ -146,11 +148,11 @@ class MainActivity : AppCompatActivity() {
                 val dialogBuilder =
                     AlertDialog.Builder(viewHolder.itemView.context)
                 dialogBuilder.setTitle("Delete Note")
-                dialogBuilder.setMessage("Do you want to permanently delete this note?")
+                dialogBuilder.setMessage("Do you want to delete this note?")
                     .setCancelable(false)
                     .setPositiveButton("Yes") { dialog, id ->
                         viewModel.delete(noteAdapter.removeItem(viewHolder.adapterPosition))
-                        Toast.makeText(this@MainActivity, "Note deleted", Toast.LENGTH_SHORT).show()
+                        undoNoteDeletionSnackbar(noteAdapter.addItem(viewHolder.adapterPosition))
                         Log.i("swipe", "note is deleted at position ${viewHolder.adapterPosition}")
                     }
                     .setNegativeButton("Cancel") { dialog, id ->
@@ -192,6 +194,26 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, NoteActivity::class.java)
             startActivityForResult(intent, ADD_NOTE_REQUEST)
         }
+    }
+
+    private fun undoNoteDeletionSnackbar(noteItem: NoteItem) {
+        val snackbar: Snackbar =
+            Snackbar.make(coordinatorLayout, "Note has been deleted", Snackbar.LENGTH_SHORT)
+        snackbar.apply {
+            setActionTextColor(Color.RED)
+            snackbar.setAction("Undo") {
+                undoDelete(noteItem)
+            }
+        }
+        snackbar.show()
+    }
+
+    private fun undoDelete(noteItem: NoteItem) {
+        viewModel.insert(noteItem)
+        Log.i("pos", "$noteItem")
+
 
     }
 }
+
+

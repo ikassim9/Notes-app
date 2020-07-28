@@ -40,6 +40,10 @@ class RecyclerViewAdapter(
         return noteList[position]
     }
 
+    fun addItem(position: Int) : NoteItem{
+        return noteList[position]
+    }
+
     class NoteItemDiffCall(var oldNoteList: List<NoteItem>, var newNoteList: List<NoteItem>) :
         DiffUtil.Callback() {
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

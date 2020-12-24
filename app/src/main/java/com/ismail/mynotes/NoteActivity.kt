@@ -6,27 +6,33 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.CalendarView
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import com.ismail.mynotes.Constants.Constant
 import kotlinx.android.synthetic.main.activity_notes.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NoteActivity : AppCompatActivity() {
-    companion object {
-        const val TITLE_KEY = "TITLE_KEY"
-        const val ID_KEY = "ID_KEY"
-        const val DESCRIPTION_KEY = "DESCRIPTION_KEY"
-        const val ADD_NOTE_REQUEST: Int = 1
-        const val EDIT_NOTE_REQUEST: Int = 2
-    }
+   private lateinit var toolbar : androidx.appcompat.widget.Toolbar
+    private var dateFormatter = SimpleDateFormat("MMM dd", Locale.US)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notes)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
+        toolbar = findViewById(R.id.toolBar)
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val intent = intent
-        if (intent.hasExtra(ID_KEY)) {
+        if (intent.hasExtra(Constant.ID_KEY)) {
             title = "Edit Note"
-            val title = intent.getStringExtra(TITLE_KEY)
-            val description = intent.getStringExtra(DESCRIPTION_KEY)
+            val title = intent.getStringExtra(Constant.TITLE_KEY)
+            val description = intent.getStringExtra(Constant.DESCRIPTION_KEY)
             editxt_title_view.setText(title)
             edittxt_description.setText(description)
         } else {
@@ -34,22 +40,31 @@ class NoteActivity : AppCompatActivity() {
         }
     }
     private fun saveNote() {
-        if (edittxt_description.text.toString().isBlank() || editxt_title_view.text.toString()
+        if (edittxt_description.text.toString().isBlank() && editxt_title_view.text.toString()
                 .isBlank()
         ) {
             Toast.makeText(this, "Empty fields", Toast.LENGTH_SHORT).show()
             return
         }
         val data = Intent()
-        val title = editxt_title_view.text.toString()
+        var title = editxt_title_view.text.toString()
         val description = edittxt_description.text.toString()
-        data.putExtra(TITLE_KEY, title)
-        data.putExtra(DESCRIPTION_KEY, description)
-        val id: Int = intent.getIntExtra(ID_KEY, -1)
+        val calendar = Calendar.getInstance().time
+        val creationDate = dateFormatter.format(calendar)
+
+        if(title.isEmpty()){
+            title =description
+            }
+
+        data.putExtra(Constant.TITLE_KEY, title)
+        data.putExtra(Constant.DESCRIPTION_KEY, description)
+        data.putExtra(Constant.DESCRIPTION_KEY, description)
+        data.putExtra(Constant.CREATION_DATE, creationDate)
+        val id: Int = intent.getIntExtra(Constant.ID_KEY, -1)
         if (id != -1) {
-            data.putExtra(ID_KEY, id)
+            data.putExtra(Constant.ID_KEY, id)
         }
-        Log.i("pass_data", "Title_Data is $title and Description_data is $description")
+        Log.i("pass_data", "Title_Data is $title and Description_data is $description creation date is $creationDate")
         setResult(Activity.RESULT_OK, data)
         finish()
     }

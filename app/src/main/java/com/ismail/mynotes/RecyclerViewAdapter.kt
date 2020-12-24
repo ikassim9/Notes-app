@@ -6,14 +6,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ismail.mynotes.db.NoteItem
+import kotlinx.android.synthetic.main.cardview.view.*
 import kotlinx.android.synthetic.main.list_item.view.*
+//import kotlinx.android.synthetic.main.list_item.view.description_text_view
+import kotlinx.android.synthetic.main.list_item.view.title_text_view
 
 class RecyclerViewAdapter(
     private val longClickListener: (NoteItem, Int) -> Boolean,
     private val clickListener: (NoteItem, Int) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
-    private var noteList: List<NoteItem> = ArrayList<NoteItem>()
+    private var noteList: List<NoteItem> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
@@ -67,6 +70,8 @@ class RecyclerViewAdapter(
         ) {
             val position = adapterPosition
             itemView.title_text_view.text = noteItem.title
+            itemView.description_text_view.text = noteItem.description
+            itemView.creationUpdateDate_text_view.text = noteItem.creation_date
             itemView.setOnLongClickListener() {
                 longClickListener(noteItem, position)
             }

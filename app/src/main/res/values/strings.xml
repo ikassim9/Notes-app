@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Notes</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="title_view">Title</string>
-    <string name="body">body</string>
+    <string name="title_view">Note title</string>
+    <string name="creation_date">Creation Date</string>
     <string name="title">Title</string>
+    <string name="body">Type your note here..</string>
+
 </resources>

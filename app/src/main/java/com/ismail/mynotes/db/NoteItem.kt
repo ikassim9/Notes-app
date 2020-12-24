@@ -16,7 +16,13 @@ data class NoteItem(
 
 
     @ColumnInfo(name = "note_description")
-    val description: String?
+    val description: String?,
+
+
+    @ColumnInfo(name = "creation_date")
+    val creation_date: String?
+
+
 )
 
 

@@ -5,22 +5,21 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.LayoutDirection
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.ismail.mynotes.NoteActivity.Companion.ADD_NOTE_REQUEST
-import com.ismail.mynotes.NoteActivity.Companion.DESCRIPTION_KEY
-import com.ismail.mynotes.NoteActivity.Companion.EDIT_NOTE_REQUEST
-import com.ismail.mynotes.NoteActivity.Companion.ID_KEY
-import com.ismail.mynotes.NoteActivity.Companion.TITLE_KEY
+import com.ismail.mynotes.Constants.Constant
 import com.ismail.mynotes.db.NoteDao
 import com.ismail.mynotes.db.NoteDatabase
 import com.ismail.mynotes.db.NoteItem
@@ -30,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: NoteViewModel
     private lateinit var noteAdapter: RecyclerViewAdapter
+    lateinit var toolbar : Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,8 @@ class MainActivity : AppCompatActivity() {
         setUpRecyclerView()
         setUpSwipeHandler()
         setUpFab()
-
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
     }
 
     private fun noteItemShortClick(noteItem: NoteItem) {
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             .setCancelable(false)
             .setPositiveButton("Yes") { dialog, id ->
                 viewModel.delete(noteItem)
-                undoNoteDeletionSnackbar(noteItem)
+                undoNoteDeletionSnackBar(noteItem)
                 Log.i("note_delete", "$noteItem is deleted at position $position")
             }
             .setNegativeButton("Cancel") { dialog, id ->
@@ -65,31 +66,33 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateNote(noteItem: NoteItem) {
         val intent = Intent(this@MainActivity, NoteActivity::class.java)
-        intent.putExtra(TITLE_KEY, noteItem.title)
-        intent.putExtra(DESCRIPTION_KEY, noteItem.description)
-        intent.putExtra(ID_KEY, noteItem.id)
-        startActivityForResult(intent, EDIT_NOTE_REQUEST)
+        intent.putExtra(Constant.TITLE_KEY, noteItem.title)
+        intent.putExtra(Constant.DESCRIPTION_KEY, noteItem.description)
+        intent.putExtra(Constant.ID_KEY, noteItem.id)
+        startActivityForResult(intent, Constant.EDIT_NOTE_REQUEST)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == ADD_NOTE_REQUEST && resultCode == Activity.RESULT_OK) {
-            val title: String? = data?.getStringExtra(TITLE_KEY)
-            val description: String? = data?.getStringExtra(DESCRIPTION_KEY)
-            val note = NoteItem(0, title, description)
+        if (requestCode == Constant.ADD_NOTE_REQUEST && resultCode == Activity.RESULT_OK) {
+            val title: String? = data?.getStringExtra(Constant.TITLE_KEY)
+            val description: String? = data?.getStringExtra(Constant.DESCRIPTION_KEY)
+            val creationDate : String? = data?.getStringExtra(Constant.CREATION_DATE)
+            val note = NoteItem(0, title, description, creationDate)
             viewModel.insert(note)
             Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show()
 
-        } else if (requestCode == EDIT_NOTE_REQUEST && resultCode == Activity.RESULT_OK) {
-            val id: Int? = data?.getIntExtra(ID_KEY, -1)
+        } else if (requestCode == Constant.EDIT_NOTE_REQUEST && resultCode == Activity.RESULT_OK) {
+            val id: Int? = data?.getIntExtra(Constant.ID_KEY, -1)
             if (id == -1) {
                 Toast.makeText(this, "Note can't be updated", Toast.LENGTH_SHORT).show()
                 Log.i("-1", "note has -1 as id")
                 return
             }
-            val title: String? = data?.getStringExtra(TITLE_KEY)
-            val description: String? = data?.getStringExtra(DESCRIPTION_KEY)
-            val note = id?.let { NoteItem(it, title, description) }
+            val creationDate : String? = data?.getStringExtra(Constant.CREATION_DATE)
+            val title: String? = data?.getStringExtra(Constant.TITLE_KEY)
+            val description: String? = data?.getStringExtra(Constant.DESCRIPTION_KEY)
+            val note = id?.let { NoteItem(it, title, description, creationDate) }
             if (note != null) {
                 viewModel.update(note)
             }
@@ -152,7 +155,7 @@ class MainActivity : AppCompatActivity() {
                     .setCancelable(false)
                     .setPositiveButton("Yes") { dialog, id ->
                         viewModel.delete(noteAdapter.removeItem(viewHolder.adapterPosition))
-                        undoNoteDeletionSnackbar(noteAdapter.addItem(viewHolder.adapterPosition))
+                        undoNoteDeletionSnackBar(noteAdapter.addItem(viewHolder.adapterPosition))
                         Log.i("swipe", "note is deleted at position ${viewHolder.adapterPosition}")
                     }
                     .setNegativeButton("Cancel") { dialog, id ->
@@ -165,7 +168,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpRecyclerView() {
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = GridLayoutManager(this, 2)
         noteAdapter =
             RecyclerViewAdapter(
                 { noteItem: NoteItem, position: Int ->
@@ -192,11 +195,11 @@ class MainActivity : AppCompatActivity() {
     private fun setUpFab() {
         fabBtn.setOnClickListener {
             val intent = Intent(this, NoteActivity::class.java)
-            startActivityForResult(intent, ADD_NOTE_REQUEST)
+            startActivityForResult(intent, Constant.ADD_NOTE_REQUEST)
         }
     }
 
-    private fun undoNoteDeletionSnackbar(noteItem: NoteItem) {
+    private fun undoNoteDeletionSnackBar(noteItem: NoteItem) {
         val snackbar: Snackbar =
             Snackbar.make(coordinatorLayout, "Note has been deleted", Snackbar.LENGTH_SHORT)
         snackbar.apply {

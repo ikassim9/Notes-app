@@ -1,23 +1,25 @@
 package com.ismail.mynotes
 
 import android.app.Activity
-import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
-import android.util.LayoutDirection
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.ismail.mynotes.Constants.Constant
 import com.ismail.mynotes.db.NoteDao
@@ -29,19 +31,41 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: NoteViewModel
     private lateinit var noteAdapter: RecyclerViewAdapter
-    lateinit var toolbar : Toolbar
+    lateinit var toolbar: Toolbar
+    private lateinit var selectedTheme: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar?.title = "My notes"
         title = "Note App"
+        selectedTheme = getSharedPreferences("index", Context.MODE_PRIVATE)
         setUpViewModel()
         setUpRecyclerView()
         setUpSwipeHandler()
         setUpFab()
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+         setTheme()
+    }
+
+    private fun setTheme() {
+        val getPrefTheme = selectedTheme.getInt("index", -1)
+
+        when (getPrefTheme) {
+            0 -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+            }
+            1 -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            2 -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+
+            }
+        }
     }
 
     private fun noteItemShortClick(noteItem: NoteItem) {
@@ -49,7 +73,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun noteItemLongClickListener(noteItem: NoteItem, position: Int): Boolean {
-        val dialogBuilder = AlertDialog.Builder(this)
+        val dialogBuilder = MaterialAlertDialogBuilder(this, R.style.DialogTheme)
         dialogBuilder.setMessage("Do you want to delete this note?")
             .setTitle("Delete Note")
             .setCancelable(false)
@@ -77,7 +101,7 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == Constant.ADD_NOTE_REQUEST && resultCode == Activity.RESULT_OK) {
             val title: String? = data?.getStringExtra(Constant.TITLE_KEY)
             val description: String? = data?.getStringExtra(Constant.DESCRIPTION_KEY)
-            val creationDate : String? = data?.getStringExtra(Constant.CREATION_DATE)
+            val creationDate: String? = data?.getStringExtra(Constant.CREATION_DATE)
             val note = NoteItem(0, title, description, creationDate)
             viewModel.insert(note)
             Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show()
@@ -89,7 +113,7 @@ class MainActivity : AppCompatActivity() {
                 Log.i("-1", "note has -1 as id")
                 return
             }
-            val creationDate : String? = data?.getStringExtra(Constant.CREATION_DATE)
+            val creationDate: String? = data?.getStringExtra(Constant.CREATION_DATE)
             val title: String? = data?.getStringExtra(Constant.TITLE_KEY)
             val description: String? = data?.getStringExtra(Constant.DESCRIPTION_KEY)
             val note = id?.let { NoteItem(it, title, description, creationDate) }
@@ -98,8 +122,8 @@ class MainActivity : AppCompatActivity() {
             }
             Log.i("note_update", "$note is updated and id is $id and note id is $note.id")
             Toast.makeText(this, "Note updated", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "Note not saved", Toast.LENGTH_SHORT).show()
+//        } else {
+//            Toast.makeText(this, "Note not updated", Toast.LENGTH_SHORT).show()
 
         }
 
@@ -107,8 +131,52 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
-        inflater.inflate(R.menu.delete_note, menu)
+        inflater.inflate(R.menu.menu, menu)
+        setUpSearchFilter(menu)
+
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun setUpSearchFilter(menu: Menu?): Boolean {
+
+        val searchItem: MenuItem? = menu?.findItem(R.id.search_filter)
+
+
+        searchItem?.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                return true
+            }
+        })
+
+//        searchItem?.setOnActionExpandListener(object : MenuItem.OnActionExpandListener)
+        val searchView: SearchView = searchItem?.actionView as SearchView
+        searchView.queryHint = "find your notes"
+
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                noteAdapter.filter.filter(newText)
+                noteAdapter.notifyDataSetChanged()
+                return false
+
+            }
+        })
+
+        return true
+    }
+
+
+    private fun handleBackPressForSearchView() {
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -117,12 +185,18 @@ class MainActivity : AppCompatActivity() {
                 deleteAllNotes()
                 return true
             }
+
+            R.id.settings -> {
+                val intent = Intent(this@MainActivity, SettingActivity::class.java)
+                startActivity(intent)
+            }
         }
+
         return super.onOptionsItemSelected(item)
     }
 
     private fun deleteAllNotes() {
-        val dialogBuilder = AlertDialog.Builder(this)
+        val dialogBuilder = MaterialAlertDialogBuilder(this, R.style.DialogTheme)
         dialogBuilder.setTitle("Delete all notes?")
         dialogBuilder.setMessage("Do you want to delete all your notes?")
             .setCancelable(false)
@@ -149,7 +223,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val dialogBuilder =
-                    AlertDialog.Builder(viewHolder.itemView.context)
+                    MaterialAlertDialogBuilder(viewHolder.itemView.context, R.style.DialogTheme)
                 dialogBuilder.setTitle("Delete Note")
                 dialogBuilder.setMessage("Do you want to delete this note?")
                     .setCancelable(false)
@@ -204,7 +278,7 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(coordinatorLayout, "Note has been deleted", Snackbar.LENGTH_SHORT)
         snackbar.apply {
             setActionTextColor(Color.RED)
-            snackbar.setAction("Undo") {
+             snackbar.setAction("Undo") {
                 undoDelete(noteItem)
             }
         }
@@ -218,5 +292,4 @@ class MainActivity : AppCompatActivity() {
 
     }
 }
-
 

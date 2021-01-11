@@ -6,4 +6,12 @@
     <string name="title">Title</string>
     <string name="body">Type your note here..</string>
 
+
+    <string-array name="themes">
+        <item>Light</item>
+        <item>Dark</item>
+        <item>System setting</item>
+
+    </string-array>
+
 </resources>

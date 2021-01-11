@@ -47,14 +47,14 @@ class NoteActivity : AppCompatActivity() {
             return
         }
         val data = Intent()
-        var title = editxt_title_view.text.toString()
+        val title = editxt_title_view.text.toString()
         val description = edittxt_description.text.toString()
         val calendar = Calendar.getInstance().time
         val creationDate = dateFormatter.format(calendar)
-
-        if(title.isEmpty()){
-            title =description
-            }
+//
+//        if(title.isEmpty()){
+//            title =description
+//            }
 
         data.putExtra(Constant.TITLE_KEY, title)
         data.putExtra(Constant.DESCRIPTION_KEY, description)

@@ -15,55 +15,88 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <!--    <TextView-->
+    <!--        android:id="@+id/settingHeader"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="12dp"-->
+    <!--        android:drawableStart="@drawable/ic_settings"-->
+    <!--        android:drawablePadding="10dp"-->
+    <!--        android:padding="8dp"-->
+    <!--        android:text="Setting"-->
+    <!--        android:textSize="18sp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/settingToolBar" />-->
+
+    <!--    <View-->
+    <!--        android:id="@+id/view2"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="1dp"-->
+    <!--        android:layout_marginTop="4dp"-->
+    <!--        android:background="@android:color/darker_gray"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/settingHeader" />-->
+
     <TextView
         android:id="@+id/nightModeTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="15dp"
-        android:clickable="true"
+        android:layout_marginTop="10dp"
+        android:drawablePadding="10dp"
+        android:hapticFeedbackEnabled="true"
+        android:padding="8dp"
         android:text="Theme"
+        android:textColor="@color/textColor"
         android:textSize="18sp"
-        android:layout_marginStart="10dp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/settingToolBar" />
+         app:drawableStartCompat="@drawable/ic_theme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingToolBar"
+        app:layout_goneMarginTop="20dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nightModeTxt" />
 
 
-<!--    <com.google.android.material.button.MaterialButtonToggleGroup-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginRight="80dp"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/nightModeTxt"-->
-<!--        app:selectionRequired="true"-->
-<!--         app:singleSelection="true">-->
+    <!--    <com.google.android.material.button.MaterialButtonToggleGroup-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginRight="80dp"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/nightModeTxt"-->
+    <!--        app:selectionRequired="true"-->
+    <!--         app:singleSelection="true">-->
 
 
-<!--        <Button-->
-<!--            style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/colorAccent"-->
-<!--            android:text="Dark"-->
+    <!--        <Button-->
+    <!--            style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:background="@color/colorAccent"-->
+    <!--            android:text="Dark"-->
 
-<!--            />-->
+    <!--            />-->
 
-<!--        <Button-->
-<!--            style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Defualt"-->
-<!--            tools:layout_editor_absoluteX="0dp"-->
-<!--            tools:layout_editor_absoluteY="108dp" />-->
+    <!--        <Button-->
+    <!--            style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="Defualt"-->
+    <!--            tools:layout_editor_absoluteX="0dp"-->
+    <!--            tools:layout_editor_absoluteY="108dp" />-->
 
-<!--        <Button-->
-<!--            style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Light" />-->
-
+    <!--        <Button-->
+    <!--            style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="Light" />-->
 
 
     <!--    <com.google.android.material.switchmaterial.SwitchMaterial-->

@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:textColor="@color/textColor"
-
             android:ellipsize="end"
             android:fontFamily="sans-serif-black"
             android:maxLines="1"
@@ -39,7 +38,7 @@
         <!--            android:layout_width="wrap_content"-->
         <!--            android:layout_height="1dp"-->
         <!--            android:layout_marginTop="4dp"-->
-        <!--            android:background="@color/colorAccent"-->
+        <!--            android:background="@color/colorAcc\ent"-->
         <!--            app:layout_constraintEnd_toEndOf="parent"-->
         <!--            app:layout_constraintHorizontal_bias="0.0"-->
         <!--            app:layout_constraintStart_toStartOf="parent"-->
@@ -51,25 +50,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textColor"
-            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:ellipsize="end"
             android:maxLines="4"
             android:text="March 2020"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+           />
 
-        <ToggleButton
-            android:layout_width="32dp"
-            android:layout_height="23dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/toggleheartbtn"
-            android:textOff=""
-            android:textOn=""
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+<!--        <ToggleButton-->
+<!--            android:id="@+id/fabBtn"-->
+<!--            android:layout_width="32dp"-->
+<!--            android:layout_height="23dp"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            android:layout_marginBottom="12dp"-->
+<!--            android:background="@drawable/toggleheartbtn"-->
+<!--            android:textOff=""-->
+<!--            android:textOn=""-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent" />-->
 
         <TextView
             android:id="@+id/description_text_view"

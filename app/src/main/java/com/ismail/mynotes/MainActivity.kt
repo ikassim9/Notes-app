@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         setUpFab()
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-         setTheme()
+        setTheme()
     }
 
     private fun setTheme() {
@@ -277,8 +278,9 @@ class MainActivity : AppCompatActivity() {
         val snackbar: Snackbar =
             Snackbar.make(coordinatorLayout, "Note has been deleted", Snackbar.LENGTH_SHORT)
         snackbar.apply {
-            setActionTextColor(Color.RED)
-             snackbar.setAction("Undo") {
+            setActionTextColor(Color.parseColor("#056ffa"))
+            //  setTextColor(Color.parseColor("#ffffff"))
+            snackbar.setAction("Undo") {
                 undoDelete(noteItem)
             }
         }
@@ -291,5 +293,5 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-}
 
+}

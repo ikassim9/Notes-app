@@ -2,6 +2,7 @@ package com.ismail.mynotes
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
@@ -32,6 +33,8 @@ class SettingActivity : AppCompatActivity() {
         appSettingsPref = getSharedPreferences("appSettingsPref", 0)
         val getPrefTheme = chosenThemePref.getInt("index", -1)
 
+
+
         when(getPrefTheme){
             0 -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -45,11 +48,11 @@ class SettingActivity : AppCompatActivity() {
 
                 }
         }
-
-        changeThemes()
+        changeTheme()
     }
 
-    private fun changeThemes() {
+
+    private fun changeTheme() {
 
         val theme = findViewById<TextView>(R.id.nightModeTxt)
         val themeChoices = arrayOf("Light", "Dark", "System setting")

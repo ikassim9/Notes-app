@@ -8,26 +8,19 @@ https://play.google.com/store/apps/details?id=com.ismail.mynotes
 
 
 # See all your notes
-<img src="images/listNotes.png" width="350">
+<img src="images/note%20list.jpg" width="350">
 
-
-# Add a new note
-<img src="images/addNote.png" width="350">
 
 
 # Update your note
-<img src="images/updateNote.png" width="350">
-
-
-# Swipe to delete your notes
-
-<img src="images/swipeToDelete.png" width="350">
-
-
-# Delete your note
-<img src="images/deleteNote.png" width="350">
+<img src="images/edit%20note.jpg" width="350">
 
 
 
-# Delete all your notes
-<img src="images/deleteAllNotes.png" width="350">
+# Change your theme
+<img src="images/pick%20a%20theme.jpg" width="350">
+
+
+
+# Find your notes
+<img src="images/search%20note.jpg" width="350">
